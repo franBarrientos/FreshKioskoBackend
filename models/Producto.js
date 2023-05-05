@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/mysql");
 const categoria = require("./Categoria");
+const pedido = require("./Pedido")
 const producto = sequelize.define("productos", {
     nombre: {
       type: DataTypes.STRING,
@@ -28,5 +29,6 @@ const producto = sequelize.define("productos", {
 
  
 producto.belongsTo(categoria, { foreignKey: 'categoria_id' });
+
 
 module.exports = producto
