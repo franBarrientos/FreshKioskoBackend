@@ -11,18 +11,20 @@ const storePedido = async (req, res) => {
     });
     const pedidoId = newPedido.id;
     let pedido_producto = [];
-    productos.forEach(element => {
+    productos.forEach((element) => {
       pedido_producto.push({
-        pedido_id:pedidoId,
-        producto_id:element.id,
-        cantidad:element.cantidad,
-      })
+        pedido_id: pedidoId,
+        producto_id: element.id,
+        cantidad: element.cantidad,
+      });
     });
-    await PedidoProductoModel.bulkCreate(pedido_producto)
+    await PedidoProductoModel.bulkCreate(pedido_producto);
 
-    res.send({mensaje: "Pedido realizado correctamente, estara listo en unos minutos"});
+    res.send({
+      mensaje: "Pedido realizado correctamente, estara listo en unos minutos",
+    });
   } catch (error) {
-    console.log(error);
+    handleError(res, "STORE_PEDIDO_ERROR", 500);
   }
 };
 

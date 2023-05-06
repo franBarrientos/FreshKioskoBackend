@@ -1,12 +1,21 @@
-const bcrypt = require("bcryptjs")
+const bcrypt = require("bcryptjs");
+/**
+ * Funcion que recibe un password en texto plano y lo retorna hasheado
+ * @param {String} textoPlano
+ * @returns Password Hash
+ */
+const encrypt = async (textoPlano) => {
+  return await bcrypt.hash(textoPlano, 10);
+};
 
-const encrypt = async (textoPlano)=>{
-    const hash = await bcrypt.hash(textoPlano, 10);
-    return hash;
-}
+/**
+ * Recibe un passwordPlano y hashPasswordm luego compara y returna true si son iguales
+ * @param {*} passwordPlano
+ * @param {*} hashPassword
+ * @returns Boolean True or False
+ */
+const compare = async (passwordPlano, hashPassword) => {
+  return await bcrypt.compare(passwordPlano, hashPassword);
+};
 
-const compare = async (passwordPlano, hashPassword)=>{
-    return await bcrypt.compare(passwordPlano, hashPassword);
-}
-
-module.exports = { encrypt, compare}
+module.exports = { encrypt, compare };
