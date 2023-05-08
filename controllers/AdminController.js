@@ -1,4 +1,4 @@
-const { PedidoModel } = require("../models");
+const { PedidoModel, PedidoProductoModel, ProductoModel } = require("../models");
 const { handleError } = require("../utils/handleError");
 const { handleSuccess } = require("../utils/handleSuccess");
 
@@ -18,7 +18,24 @@ const getPedidos = async (req, res) => {
       where: { estado: 0 },
       order: [["createdAt", "DESC"]],
     });
-    handleSuccess(res, pedidos);
+
+
+    const pedidosConProductos = await Promise.all(
+      pedidos.map(async (pedido) => {
+        const productos = await PedidoProductoModel.findAll({
+          where: { pedido_id: pedido.id },
+        });
+        const productoIds = productos.map((producto) => producto.producto_id);
+        const productosEncontrados = await ProductoModel.findAll({
+          where: { id: productoIds },
+        });
+        return { ...pedido.dataValues, productos: productosEncontrados };
+      })
+    );
+
+
+
+    handleSuccess(res, pedidosConProductos);
   } catch (error) {
     console.log(error);
     handleError(

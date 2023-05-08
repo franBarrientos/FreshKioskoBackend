@@ -1,5 +1,5 @@
 const { handleError } = require("../utils/handleError");
-const { handleSuccess } = require("../utils/handleSuccess")
+const { handleSuccess } = require("../utils/handleSuccess");
 const { ProductoModel } = require("../models");
 
 const getProductos = async (req, res) => {
@@ -11,13 +11,13 @@ const getProductos = async (req, res) => {
     });
     handleSuccess(res, data);
   } catch (error) {
-    handleError(res, "GET_PRODUCTOS_ERROR", 500);
+    handleError(res, "GET_PRODUCTOS_ERROR", 500, error);
   }
 };
 
 getAllProductos = async (req, res) => {
   try {
-    const data = await ProductoModel.findAll();
+    const data = await ProductoModel.findAllData();
     handleSuccess(res, data);
   } catch (error) {
     handleError(res, "GET_ALL_PRODUCTOS_ERROR", 500);
@@ -35,7 +35,7 @@ const UpdateProducto = async (req, res) => {
     producto.precio = precio;
     producto.disponible = disponible;
     producto.save();
-    handleSuccess(res, producto)
+    handleSuccess(res, producto);
   } catch (error) {
     handleError(res, "UPDATE_PRODUCTO_ERROR", 500);
   }

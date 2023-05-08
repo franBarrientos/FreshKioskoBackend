@@ -1,7 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/mysql");
-const producto = require("./Producto")
-const usuario = require("./Usuario")
+const usuario = require("../models/Usuario")
 const pedido = sequelize.define('pedidos', {
     total: {
       type: DataTypes.FLOAT,
@@ -24,6 +23,13 @@ const pedido = sequelize.define('pedidos', {
     }
   });
 
-  pedido.belongsTo(usuario, { foreignKey: "usuario_id" });
+  pedido.findAllData = function(){
+    pedido.belongsTo(usuario,
+      {
+        foreignKey: "usuario_id"
+      })
+      return pedido.findAll({include:usuario})
+  }
+
 
   module.exports = pedido

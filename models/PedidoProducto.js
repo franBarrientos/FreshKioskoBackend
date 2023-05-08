@@ -1,25 +1,22 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/mysql");
-const producto = require("./Producto");
-const pedido = require("./Pedido");
+const { PedidoModel, ProductoModel} = require("../models")
 
 const pedidoproducto = sequelize.define(
   "pedido_productos",
-  {
-    pedido_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "pedidos",
-        key: "id",
-      },
+  { pedido_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: "pedidos",
+      key: "id",
     },
-    producto_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "productos",
-        key: "id",
-      },
+  }, producto_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: "productos",
+      key: "id",
     },
+  },
     cantidad: {
       type: DataTypes.INTEGER,
     },
@@ -29,7 +26,7 @@ const pedidoproducto = sequelize.define(
   }
 );
 
-pedidoproducto.belongsTo(pedido, { foreignKey: "pedido_id" });
-pedidoproducto.belongsTo(producto, { foreignKey: "producto_id" });
+
+
 
 module.exports = pedidoproducto;

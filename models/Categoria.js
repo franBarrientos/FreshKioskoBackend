@@ -7,10 +7,9 @@ const categoria = sequelize.define("categorias", {
     },
     icono: {
         type: DataTypes.STRING
+    }},{
+      timestamps:true
     }
-  },
-  {
-    timestamps:true
-  });
+  );
 
 module.exports = categoria
