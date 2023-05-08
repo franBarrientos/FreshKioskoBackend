@@ -70,11 +70,7 @@ const validateUsuario = async (req, res) => {
         res.json({ success: false });
       }
     })
-  } catch (error) {
-      console.log(error);
-      res.json({ success: false });
-    };
-  }
+  } catch (error) {handleError(res, { success: false }, 500, "Error en la validacion del usuario, no se econtro email")}}
 
 
 

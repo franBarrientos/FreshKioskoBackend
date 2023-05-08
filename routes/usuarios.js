@@ -8,9 +8,8 @@ const {
   validateUsuario,
 } = require("../controllers/UsuarioController");
 const router = express.Router();
-const { validatorUsuario } = require("../validators/Usuario");
 
 router.get("/", getusuarios) 
-router.post("/validate", validatorUsuario, validateUsuario);
+router.post("/validate");
 
 module.exports = router;

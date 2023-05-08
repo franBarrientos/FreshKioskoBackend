@@ -8,7 +8,10 @@
 const handleError = (res, message = "", status = 403 , details = "") => {
     console.log(`[Error] : ${details}` )
     res.status(status);
-    res.send({error : message})
+    res.json({
+        error : message,
+        body : ""
+    })
 }
 
 module.exports = { handleError }

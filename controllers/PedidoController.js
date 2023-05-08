@@ -1,4 +1,5 @@
 const { handleError } = require("../utils/handleError");
+const { handleSuccess } = require("../utils/handleSuccess")
 const { PedidoModel, PedidoProductoModel } = require("../models");
 
 const storePedido = async (req, res) => {
@@ -20,9 +21,7 @@ const storePedido = async (req, res) => {
     });
     await PedidoProductoModel.bulkCreate(pedido_producto);
 
-    res.send({
-      mensaje: "Pedido realizado correctamente, estara listo en unos minutos",
-    });
+    handleSuccess(res,{ mensaje: "Pedido realizado correctamente, estara listo en unos minutos"})
   } catch (error) {
     handleError(res, "STORE_PEDIDO_ERROR", 500);
   }
