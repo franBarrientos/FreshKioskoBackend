@@ -23,7 +23,7 @@ const storePedido = async (req, res) => {
 
     handleSuccess(res,{ mensaje: "Pedido realizado correctamente, estara listo en unos minutos"})
   } catch (error) {
-    handleError(res, "STORE_PEDIDO_ERROR", 500);
+    handleError(res, "STORE_PEDIDO_ERROR", 500, error);
   }
 };
 

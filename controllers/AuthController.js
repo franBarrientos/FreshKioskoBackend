@@ -3,7 +3,7 @@ const { handleSuccess } = require("../utils/handleSuccess");
 const { compare, encrypt } = require("../utils/handleHash");
 const { UsuarioModel } = require("../models");
 const { tokenSign, verifyToken } = require("../utils/handleJWT");
-
+const { googleVerify } = require("../utils/handleGoogle");
 const registerCtrl = async (req, res) => {
   try {
     const { email, password, name } = req.body;
@@ -47,9 +47,9 @@ const loginCtrl = async (req, res) => {
     handleSuccess(
       res,
       {
-        data: UserWithoutPassword,
+        user: UserWithoutPassword,
         state: true,
-        token: await tokenSign(UserWithoutPassword)
+        token: await tokenSign(UserWithoutPassword),
       },
       200
     );
@@ -58,7 +58,35 @@ const loginCtrl = async (req, res) => {
   }
 };
 
+const googleSignIn = async (req, res) => {
+  try {
+    const { id_token } = req.body;
+    const { name, img, email } = await googleVerify(id_token);
+    const data = {
+      name,
+      email,
+      password: "123",
+    };
+    const user = await UsuarioModel.findOne({ where: { email } });
+    if (user) {
+      await user.update(data);
+    }
+
+    if (!user) {
+      const userNew = await UsuarioModel.create(data);
+      const token = await tokenSign(userNew);
+      handleSuccess(res, { user: userNew, token, state: true });
+    } else {
+      const token = await tokenSign(user);
+      handleSuccess(res, { user, token, state: true });
+    }
+  } catch (error) {
+    handleError(res, "ERROR_GOOGLE", 500, error);
+  }
+};
+
 module.exports = {
   registerCtrl,
   loginCtrl,
+  googleSignIn
 };

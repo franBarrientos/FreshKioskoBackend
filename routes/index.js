@@ -3,7 +3,7 @@ const router = express.Router();
 const fs = require("fs");
 const PATH_ROUTES = __dirname;
 /**
- * Esta funcion recibe un path y retorna este sin la extension ej: .js, .jsx ect
+ * This function receives a path and returns it without the extension eg: .js, .jsx ect
  * @param {*String} fileName 
  * @returns String
  */
@@ -12,9 +12,9 @@ const removeJs = (fileName) => {
 };
 
 /**
-    Este código utiliza el módulo fs de Node.js para leer el contenido del directorio PATH_ROUTES, que es una constante que contiene la ruta al directorio de rutas de la aplicación. La función readdirSync() devuelve una matriz con los nombres   de    todos los archivos en el directorio.
+   This code uses the Node.js fs module to read the contents of the PATH_ROUTES directory, which is a constant that contains the path to the application routes directory. The readdirSync() function returns an array with the names of all the files in the directory.
 
-    Luego, utiliza el método filter() de la matriz para filtrar los nombres de archivo que no son "index.js". Para cada archivo que pasa el filtro, utiliza la función removeJs() para obtener su nombre sin extensión y utiliza router.use() de Express.js para agregar una nueva ruta a la aplicación. La ruta es el nombre del archivo sin extensión, y el controlador de la ruta se carga desde el archivo utilizando require().
+    Then, use the array's filter() method to filter out filenames that aren't "index.js". For each file that passes the filter, use the removeJs() function to get its name without an extension, and use router.use() of Express.js to add a new route to the application. The path is the name of the file without an extension, and the path handler is loaded from the file using require().
  */
 fs.readdirSync(PATH_ROUTES).filter((file) => {
   const name = removeJs(file);
