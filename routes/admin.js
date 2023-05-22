@@ -6,9 +6,9 @@ const authMiddleware = require("../middlewares/sessionMiddleware")
 const {validateProducto } = require("../validators/producto")
 
 router.get("/pedidos", authMiddleware([0]), getPedidos)
-//router.get("/ventas", authMiddleware([0]), totalVentas)
-router.get("/pedidos/total", authMiddleware([0]), getPedidosTotal)
 router.patch("/pedido/despachado", authMiddleware([0]), despacharPedido)
+
+router.get("/pedidos/total", authMiddleware([0]), getPedidosTotal)
 
 router.get("/productos", authMiddleware([0]), getAllProductos)
 router.post("/productos", [authMiddleware([0]), validateProducto], createProducto)

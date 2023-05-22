@@ -9,7 +9,6 @@ const authMiddleware = (roles = [])=>async (req, res, next) => {
     }
     const token = req.headers.authorization.split(" ").pop();
     const dataToken = await verifyToken(token);
-    
     if (!roles.includes(dataToken.role)) {
       handleError(res, "ERROR_ROLE_TOKEN", 403, "Not Authorizate");
       return;
